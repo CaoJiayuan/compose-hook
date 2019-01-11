@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Jobs\ComposeJob;
+use App\Jobs\GitJob;
 use Illuminate\Http\Request;
 
 class HookController extends Controller
@@ -17,10 +18,6 @@ class HookController extends Controller
 
     public function hook(Request $request)
     {
-        if ($request->get('token') != env('API_TOKEN')) {
-            return abort(403);
-        }
-
         $this->validate($request, [
             'dir' => 'required'
         ]);
@@ -29,4 +26,17 @@ class HookController extends Controller
 
         return 'OK';
     }
+
+    public function git(Request $request)
+    {
+        $this->validate($request, [
+            'dir' => 'required'
+        ]);
+
+
+        dispatch(new GitJob($request->get('dir')));
+
+        return 'OK';
+    }
+
 }

@@ -10,5 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::any('/compose-hook', 'HookController@hook');
+Route::group(['middleware' => 'api.token'], function () {
+    Route::any('/compose-hook', 'HookController@hook');
+    Route::any('/git', 'HookController@git');
+});

@@ -3,14 +3,15 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class ComposeJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, WithExecLines;
+
     private $dir;
     /**
      * @var null
@@ -51,14 +52,5 @@ class ComposeJob implements ShouldQueue
         $lines[] = 'docker-compose up -d';
         $lines[] = 'systemctl start nginx';
         $this->execLines($lines);
-    }
-
-    protected function execLines($lines)
-    {
-        foreach($lines as $line) {
-            exec($line, $outputs);
-            $log = implode(PHP_EOL, $outputs);
-            info($log);
-        }
     }
 }
