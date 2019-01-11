@@ -37,7 +37,9 @@ class ComposeJob implements ShouldQueue
     public function handle()
     {
         chdir($this->dir);
-        $lines = [];
+        $lines = [
+            'nginx -s stop'
+        ];
         if ($this->service) {
             $lines[] = 'docker-compose pull ' . $this->service;
             $lines[] = 'docker-compose stop ' . $this->service;
@@ -47,6 +49,7 @@ class ComposeJob implements ShouldQueue
             $lines[] = 'docker-compose down';
         }
         $lines[] = 'docker-compose up -d';
+        $lines[] = 'systemctl start nginx';
         $this->execLines($lines);
     }
 
