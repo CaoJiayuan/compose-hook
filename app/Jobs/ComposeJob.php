@@ -65,7 +65,7 @@ class ComposeJob implements ShouldQueue
 
         if ($this->mail) {
             \Mail::to($this->mail)
-                ->send(new ComposeDeployed($this->service, $this->url));
+                ->queue(new ComposeDeployed($this->service, $this->url));
         }
     }
 }

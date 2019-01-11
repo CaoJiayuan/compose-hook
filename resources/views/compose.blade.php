@@ -4,9 +4,9 @@
 Your service deploy succeed!
 
 @if($url)
-    @component('mail::button', ['url' => $url])
-        View
-    @endcomponent
+@component('mail::button', ['url' => $url])
+    View
+@endcomponent
 @endif
 
 From, <br>

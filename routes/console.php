@@ -18,5 +18,6 @@ Artisan::command('inspire', function () {
 })->describe('Display an inspiring quote');
 
 Artisan::command('test', function () {
-    dispatch(new \App\Jobs\ComposeJob('/Users/cjy/Apps/www/laiyifen/api', 'app'));
+    Mail::to('cjy632258@hotmail.com')
+        ->send(new \App\Mail\ComposeDeployed('admin', 'http://baidu.com'));
 })->describe('Display an inspiring quote');
