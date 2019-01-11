@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\ComposeDeployed;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -17,17 +18,26 @@ class ComposeJob implements ShouldQueue
      * @var null
      */
     private $service;
+    private $mail;
+    /**
+     * @var null
+     */
+    private $url;
 
     /**
      * Create a new job instance.
      *
      * @param $dir
      * @param null $service
+     * @param $mail
+     * @param null $url
      */
-    public function __construct($dir, $service = null)
+    public function __construct($dir, $service = null, $mail = null, $url = null)
     {
         $this->dir = $dir;
         $this->service = $service;
+        $this->mail = $mail;
+        $this->url = $url;
     }
 
     /**
@@ -52,5 +62,10 @@ class ComposeJob implements ShouldQueue
         $lines[] = 'docker-compose up -d';
         $lines[] = 'systemctl start nginx';
         $this->execLines($lines);
+
+        if ($this->mail) {
+            \Mail::to($this->mail)
+                ->send(new ComposeDeployed($this->service, $this->url));
+        }
     }
 }

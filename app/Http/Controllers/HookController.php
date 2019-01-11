@@ -22,7 +22,7 @@ class HookController extends Controller
             'dir' => 'required'
         ]);
 
-        dispatch(new ComposeJob($request->get('dir'), $request->get('service')));
+        dispatch(new ComposeJob($request->get('dir'), $request->get('service'), $request->get('mail'), $request->get('url')));
 
         return 'OK';
     }
