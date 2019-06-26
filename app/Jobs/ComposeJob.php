@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 
 class ComposeJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, WithExecLines;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, WithExecLines, WithSendEmail;
 
     private $dir;
     /**
@@ -64,8 +64,7 @@ class ComposeJob implements ShouldQueue
         $this->execLines($lines);
 
         if ($this->mail) {
-            \Mail::to($this->mail)
-                ->queue(new ComposeDeployed("{$this->dir}:{$this->service}", $this->url));
+            $this->sendComposeEmail($this->mail, "{$this->dir}:{$this->service}", $this->url);
         }
     }
 }
