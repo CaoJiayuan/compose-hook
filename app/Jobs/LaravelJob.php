@@ -49,7 +49,7 @@ class LaravelJob implements ShouldQueue
             'php artisan queue:restart'
         ];
 
-        $commands = array_merge($lines, $this->extras);
+        $commands = array_filter(array_merge($lines, $this->extras));
         $logs = $this->execLines($commands);
         array_unshift($commands, "cd {$this->dir}");
 
