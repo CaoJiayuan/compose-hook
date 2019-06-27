@@ -15,6 +15,7 @@
         "laravel/tinker": "^1.0",
         "nerio/daemon": "dev-master",
         "pda/pheanstalk": "^3.2",
+        "predis/predis": "^1.1",
         "workerman/workerman": "^3.5"
     },
     "require-dev": {
