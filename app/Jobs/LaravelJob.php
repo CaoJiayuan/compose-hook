@@ -45,7 +45,7 @@ class LaravelJob implements ShouldQueue
         chdir($this->dir);
         $lines = [
             'git pull',
-            'compose install --ignore-platform-reqs'
+            'composer install --ignore-platform-reqs'
         ];
 
         $commands = array_merge($lines, $this->extras);
