@@ -23,7 +23,8 @@ class HookController extends Controller
             'dir' => 'required'
         ]);
 
-        dispatch(new ComposeJob($request->get('dir'), $request->get('service'), $request->get('mail'), $request->get('url')));
+        dispatch(new ComposeJob($request->get('dir'), $request->get('service'), $request->get('mail'),
+            $request->get('url')));
 
         return 'OK';
     }
@@ -47,7 +48,9 @@ class HookController extends Controller
             'service' => 'required',
         ]);
 
-        dispatch(new LaravelJob($request->get('dir'), $request->get('service'), $request->get('mail'), $request->get('extras', [])));
+        $extras = explode(',', $request->get('extras'));
+
+        dispatch(new LaravelJob($request->get('dir'), $request->get('service'), $request->get('mail'),$extras));
 
         return 'OK';
     }

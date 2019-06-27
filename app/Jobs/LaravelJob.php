@@ -49,9 +49,9 @@ class LaravelJob implements ShouldQueue
         ];
 
         $commands = array_merge($lines, $this->extras);
-        $this->execLines($commands);
+        $logs = $this->execLines($commands);
         array_unshift($commands, "cd {$this->dir}");
 
-        $this->mail && $this->sendGitEmail($this->mail, "{$this->dir}:{$this->service}", $commands);
+        $this->mail && $this->sendGitEmail($this->mail, "{$this->dir}:{$this->service}", $commands, $logs);
     }
 }

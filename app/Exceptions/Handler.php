@@ -2,11 +2,14 @@
 
 namespace App\Exceptions;
 
+use CaoJiayuan\LaravelApi\Foundation\Exceptions\Traits\ExceptionRenderer;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use ExceptionRenderer;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -46,6 +49,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        return $this->renderException($request, $exception);
     }
 }

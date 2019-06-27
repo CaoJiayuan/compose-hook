@@ -11,17 +11,23 @@ class GitDeployed extends Mailable
     use Queueable, SerializesModels;
     private $service;
     private $commands;
+    /**
+     * @var array
+     */
+    private $outputs;
 
     /**
      * Create a new message instance.
      *
      * @param $service
      * @param $commands
+     * @param array $outputs
      */
-    public function __construct($service, $commands)
+    public function __construct($service, $commands, $outputs = [])
     {
         $this->service = $service;
         $this->commands = $commands;
+        $this->outputs = $outputs;
     }
 
     /**
@@ -33,7 +39,8 @@ class GitDeployed extends Mailable
     {
         return $this->markdown('git', [
             'service'  => $this->service,
-            'commands' => $this->commands
+            'commands' => $this->commands,
+            'outputs'  => $this->outputs
         ]);
     }
 }

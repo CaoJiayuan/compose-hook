@@ -9,12 +9,12 @@ use App\Mail\GitDeployed;
 trait WithSendEmail
 {
 
-    public function sendGitEmail($email, $service, $commands = [])
+    public function sendGitEmail($email, $service, $commands = [], $outputs = [])
     {
         $emails = explode(',', $email);
         foreach ($emails as $email) {
             \Mail::to($email)
-                ->queue(new GitDeployed($service, $commands));
+                ->queue(new GitDeployed($service, $commands, $outputs));
         }
     }
 
